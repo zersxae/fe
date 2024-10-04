@@ -1,0 +1,441 @@
+@import "../../../mixins.scss";
+@import url('https://fonts.googleapis.com/css2?family=REM:ital,wght@0,400;1,900&display=swap');
+.detailsBanner {
+    width: 100%;
+    background-color: var(--black);
+    padding-top: 100px;
+    margin-bottom: 50px;
+
+    .backdrop-img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.1;
+        overflow: hidden;
+        .lazy-load-image-background {
+            width: 100%;
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                
+            }
+        }
+    }
+    .opacity-layer {
+        width: 100%;
+        height: 250px;
+        background: linear-gradient(
+            180deg,
+            rgba(4, 21, 45, 0) 0%,
+            #202020 79.17%
+        );
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    .content {
+        display: flex;
+        position: relative;
+        gap: 50px;
+        flex-direction: column;
+        @include md {
+            gap: 40px;
+            flex-direction: row;
+        }
+        .left {
+            flex-shrink: 0;
+            .posterImg {
+                width: 100%;
+                display: block;
+                border-radius: 12px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                display: block;
+                @include md {
+                    display: block;
+                    max-width: 350px;
+                }
+            
+                &:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 2px 50px rgba(0, 0, 0, 0.3); // Hafif bir gölge efekti
+
+                }
+            }
+            
+        }
+        .right {
+            color: white;
+            .title {
+                font-size: 28px;
+                line-height: 40px;
+                transition: transform 0.3s ease;
+                @include md {
+                    font-size: 34px;
+                    line-height: 44px;
+                }
+            }
+            .subtitle {
+                font-size: 16px;
+                line-height: 24px;
+                margin-bottom: 15px;
+                font-style: italic;
+                opacity: 0.5;
+                color: white;
+                @include md {
+                    font-size: 20px;
+                    line-height: 28px;
+                }
+            }
+            .genres {
+                margin-bottom: 25px;
+                flex-flow: row wrap;
+            }
+            .overview {
+                margin-bottom: 25px;
+                .heading {
+                    font-size: 24px;
+                    margin-bottom: 10px;
+                }
+                .description {
+                    line-height: 24px;
+                    @include md {
+                        padding-right: 100px;
+                    }
+                }
+            }
+            .circleRating {
+                max-width: 70px;
+                background-color: var(--black2);
+                transition: transform 0.3s ease;
+                @include md {
+                    max-width: 90px;
+                }
+                .CircularProgressbar-text {
+                    fill: rgb(255, 255, 255);
+                }
+                &:hover {
+                    transform: scale(1.2); // Fare üzerine gelindiğinde boyutu büyüt
+                }
+            }
+            
+            .playbtn {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+                &:hover {
+                    transform: scale(1.1); /* Hover olduğunda büyüklük artışı */
+                }
+                svg {
+                    width: 60px;
+                    @include md {
+                        width: 80px;
+                    }
+                }
+                
+                .text {
+                    font-size: 30px;
+                    color: #cecece;
+                    transition: all 0.7s ease-in-out;
+                    font-family: "REM", sans-serif;
+                    font-optical-sizing: auto;
+                    font-style: normal;
+                    
+
+                }
+                .triangle {
+                    stroke-dasharray: 240;
+                    stroke-dashoffset: 480;
+                    stroke: white;
+                    transform: translateY(0);
+                    transition: all 0.7s ease-in-out;
+                }
+                .circle {
+                    stroke: white;
+                    stroke-dasharray: 650;
+                    stroke-dashoffset: 1300;
+                    transition: all 0.5s ease-in-out;
+                }
+                &:hover {
+                    .text {
+                        color: #ffffff;
+                    }
+                    .triangle {
+                        stroke-dashoffset: 0;
+                        opacity: 1;
+                        stroke: var(--white);
+                        animation: trailorPlay 0.7s ease-in-out;
+                    }
+                    .circle {
+                        stroke-dashoffset: 0;
+                        stroke: var(--white);
+                    }
+                }
+            }
+            .row {
+                display: flex;
+                align-items: center;
+                gap: 25px;
+                margin-bottom: 25px;
+            }
+
+            .info {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 15px 0;
+                display: flex;
+                .infoItem {
+                    margin-right: 10px;
+                    display: flex;
+                    flex-flow: row wrap;
+                }
+                .text {
+                    margin-right: 10px;
+                    opacity: 0.5;
+                    line-height: 24px;
+                    &.bold {
+                        font-weight: 600;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+    .detailsBannerSkeleton {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        gap: 25px;
+        @include md {
+            gap: 50px;
+            flex-direction: row;
+        }
+        .contentWrapper {
+            display: flex;
+            gap: 50px;
+        }
+        .left {
+            flex-shrink: 0;
+            width: 100%;
+            display: block;
+            border-radius: 82px;
+            aspect-ratio: 1/1.5;
+            @include md {
+                max-width: 350px;
+            }
+        }
+        .right {
+            width: 100%;
+            .row {
+                width: 100%;
+                height: 25px;
+                margin-bottom: 20px;
+                border-radius: 1px;
+                &:nth-child(2) {
+                    width: 75%;
+                    margin-bottom: 50px;
+                }
+                &:nth-child(5) {
+                    width: 50%;
+                    margin-bottom: 50px;
+                }
+            }
+        }
+    }
+}
+.tooltip {
+    display: none;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    transition: opacity 0.8s;
+    position: absolute; 
+    padding: 10px; /* Daha fazla içerik alanı */
+    border-radius: 7px;
+    z-index: 1;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Hafif bir gölge efekti */
+    backdrop-filter: blur(10px); /* Bulanık arka plan efekti */
+}
+
+.playbtn:hover .tooltip {
+    display: block;
+}
+
+.logoBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #131720; 
+    border: none;
+    border-radius: 10px;
+    padding: 5px 5px;
+    margin-left: 5px; 
+    transition: background-color 0.3s; 
+    img.logo {
+        width: 140px;
+        height: auto;
+        transform: scale(1.6);
+        margin-right: -3px; // Logodan yazıya olan mesafe
+        transition: 0.3s; // Hover efekti için geçiş efekti eklendi
+    }
+
+    .text {
+        color: white; // Yazı rengi
+        font-size: 16px; // Yazı boyutu
+        transition: 0.5s;
+    }
+
+    &:hover img.logo {
+        width: 150px; 
+    }
+
+}
+.socialMedia {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    .heading {
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    .socialLinks {
+        display: flex;
+        flex-wrap: wrap;
+
+        a {
+            display: flex;
+            align-items: center;
+            color: #000000;
+            text-decoration: none;
+            margin-right: 10px;
+            margin-top: 7px;
+            min-width: auto;
+            padding-right: 15px;
+            height: 30px;
+            border-radius: 10px;
+            background: #ffffff;
+            transition: background-color 0.5s;
+            position: relative; 
+
+            :before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0));
+                animation: 3s linear infinite 
+            }
+
+            svg {
+                margin-left: 10px;
+                margin-right: 5px;
+                transition: margin-left 0.55s;
+            }
+
+            span {
+                font-size: 16px;
+            }
+
+            &:hover {
+                background: #1e1e1e;
+                color: #ffffff;
+
+                svg {
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .socialLinks {
+            a {
+                min-width: auto; /* Genişlik otomatik ayarlanacak */
+                margin-right: 5px;
+                padding-right: 20px; /* Belirli bir boşluk bırak */
+                height: 30px;
+            }
+        }
+    }
+}
+.socialMediaIMDB {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    .heading {
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    .socialLinksIMDB {
+        display: flex;
+        flex-wrap: wrap;
+
+        a {
+            display: flex;
+            align-items: center;
+            color: #000000;
+            text-decoration: none;
+            margin-right: 10px;
+            margin-top: 7px;
+            min-width: auto;
+            padding-right: 15px;
+            height: 30px;
+            border-radius: 10px;
+            background: #ffffff;
+            transition: background-color 0.5s;
+            position: relative; 
+
+            :before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0%;
+                width: auto;
+                height: auto;
+                background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0));
+                animation: 3s linear infinite 
+            }
+
+            svg {
+                margin-left: 10px;
+                margin-right: 5px;
+                transition: margin-left 0.55s;
+            }
+
+            span {
+                font-size: 16px;
+            }
+
+            &:hover {
+                background: #1b1b1b;
+                color: #fffb00;
+
+                svg {
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .socialLinks {
+            a {
+                min-width: auto; /* Genişlik otomatik ayarlanacak */
+                margin-right: 5px;
+                padding-right: 20px; /* Belirli bir boşluk bırak */
+                height: 30px;
+            }
+        }
+    }
+}
+
