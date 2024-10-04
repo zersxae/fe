@@ -35,7 +35,6 @@ const DetailsBanner = ({ video, crew }) => {
         const minutes = totalMinutes % 60;
         return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
     };
-    
 
     return (
         <div className="detailsBanner">
@@ -233,6 +232,7 @@ const DetailsBanner = ({ video, crew }) => {
             )}
         </div>
     );
+
 };
 
 export default DetailsBanner;

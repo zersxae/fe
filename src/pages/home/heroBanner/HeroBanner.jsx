@@ -50,14 +50,13 @@ const HeroBanner = () => {
             <div className="opacity-layer"></div>
             <ContentWrapper>
                 <div className="heroBannerContent">
-                    <span className="title">Merhaba</span>
                     <span className="subTitle">
                         Milyonlarca film, dizi ve kişi.
                     </span>
                     <div className="searchInput">
                         <input
                             type="text"
-                            placeholder="Bir film veya dizi ara..."
+                            placeholder="Ara..."
                             onChange={(e) => setQuery(e.target.value)}
                             onKeyUp={searchQueryHandler}
                         />

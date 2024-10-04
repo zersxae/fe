@@ -15,6 +15,7 @@ const Spinner = ({ initial }) => {
                     strokeWidth="5"
                 ></circle>
             </svg>
+            <div className="loader">Yükleniyor...</div>
         </div>
     );
 };

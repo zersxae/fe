@@ -1,9 +1,7 @@
-import React, { useRef } from "react";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import React, { useRef, useEffect, useState, lazy, Suspense } from "react";import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
-
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import Img from "../lazyLoadImage/Img";
 import PosterFallback from "../../assets/no-poster.png";
@@ -44,6 +42,7 @@ const Carousel = ({ data, loading, endpoint, title }) => {
     };
 
     return (
+        <Suspense fallback={<div>Loading...</div>}>
         <div className="carousel">
             <ContentWrapper>
                 {title && <div className="carouselTitle">{title}</div>}
@@ -74,7 +73,7 @@ const Carousel = ({ data, loading, endpoint, title }) => {
                                     }
                                 >
                                     <div className="posterBlock">
-                                        <Img src={posterUrl} />
+                                    <Img src={posterUrl} alt={item.title || item.name} />
                                         <CircleRating
                                             rating={item.vote_average.toFixed(
                                                 1
@@ -108,7 +107,9 @@ const Carousel = ({ data, loading, endpoint, title }) => {
                     </div>
                 )}
             </ContentWrapper>
+            
         </div>
+        </Suspense>
     );
 };
 

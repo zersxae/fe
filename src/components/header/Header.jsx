@@ -2,26 +2,38 @@ import React, { useState, useEffect } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
+import { MdNightlightRound, MdWbSunny } from "react-icons/md";
 import { useNavigate, useLocation } from "react-router-dom";
-import { fetchDataFromApi } from "../../utils/api";
-
-import "./style.scss";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import logo from "../../assets/log.png";
-import logo2 from "../../assets/analogo.png";
+import "./style.scss";
 
 const Header = () => {
     const [show, setShow] = useState("top");
     const [lastScrollY, setLastScrollY] = useState(0);
     const [mobileMenu, setMobileMenu] = useState(false);
     const [query, setQuery] = useState("");
-    const [showSearch, setShowSearch] = useState("");
+    const [showSearch, setShowSearch] = useState(false);
+    const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
+
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
+        document.body.classList.toggle("dark-mode", darkMode);
+        localStorage.setItem("theme", darkMode ? "dark" : "light");
+    }, [darkMode]);
+
+    useEffect(() => {
         window.scrollTo(0, 0);
     }, [location]);
+
+    useEffect(() => {
+        window.addEventListener("scroll", controlNavbar);
+        return () => {
+            window.removeEventListener("scroll", controlNavbar);
+        };
+    }, [lastScrollY]);
 
     const controlNavbar = () => {
         if (window.scrollY > 200) {
@@ -36,13 +48,6 @@ const Header = () => {
         setLastScrollY(window.scrollY);
     };
 
-    useEffect(() => {
-        window.addEventListener("scroll", controlNavbar);
-        return () => {
-            window.removeEventListener("scroll", controlNavbar);
-        };
-    }, [lastScrollY]);
-
     const searchQueryHandler = (event) => {
         if (event.key === "Enter" && query.length > 0) {
             navigate(`/search/${query}`);
@@ -52,9 +57,13 @@ const Header = () => {
         }
     };
 
+    const toggleDarkMode = () => {
+        setDarkMode(prevMode => !prevMode);
+    };
+
     const openSearch = () => {
-        setMobileMenu(false);
         setShowSearch(true);
+        setMobileMenu(false);
     };
 
     const openMobileMenu = () => {
@@ -66,32 +75,23 @@ const Header = () => {
         <header className={`header2 ${mobileMenu ? "mobileView" : ""} ${show}`}>
             <ContentWrapper>
                 <div className="logo" onClick={() => navigate("/")}>
-                    <img src={logo} alt="Logo" />
-                </div>       
+                    <img src={logo} alt="Site Logo" />
+                </div>
                 <ul className="menuItems">
-                    <li className="menuItem" onClick={() => navigate("/")}>
-                        Ana Sayfa
-                    </li>
-                    <li className="menuItem" onClick={() => navigate("explore/movie")}>
-                        Filmler
-                    </li>
-                    <li className="menuItem" onClick={() => navigate("explore/tv")}>
-                        Diziler
-                    </li>
-                    <li className="menuItem">
-                        <HiOutlineSearch onClick={openSearch} />
-                    </li>
+                    <li className="menuItem" onClick={() => navigate("/")}>Ana Sayfa</li>
+                    <li className="menuItem" onClick={() => navigate("/explore/movie")}>Filmler</li>
+                    <li className="menuItem" onClick={() => navigate("/explore/tv")}>Diziler</li>
                 </ul>
-
                 <div className="mobileMenuItems">
-                    <HiOutlineSearch onClick={openSearch} />
+                    <HiOutlineSearch onClick={openSearch} className="mobileOnly" />
                     {mobileMenu ? (
-                        <VscChromeClose onClick={() => setMobileMenu(false)} />
+                        <VscChromeClose onClick={() => setMobileMenu(false)} className="mobileOnly" />
                     ) : (
-                        <SlMenu onClick={openMobileMenu} />
+                        <SlMenu onClick={openMobileMenu} className="mobileOnly" />
                     )}
                 </div>
             </ContentWrapper>
+
             {showSearch && (
                 <div className="searchBar">
                     <ContentWrapper>

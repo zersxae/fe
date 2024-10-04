@@ -83,7 +83,7 @@ const SearchResult = () => {
                         </>
                     ) : (
                         <span className="resultNotFound">
-                            Sorry, Results not found!
+                            Üzgünüz Aradığnı Bulamadık, Ana sayfaya dönmeye ne dersin?
                         </span>
                     )}
                 </ContentWrapper>

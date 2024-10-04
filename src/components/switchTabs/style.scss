@@ -1,35 +1,99 @@
 .switchingTabs {
+    width: 100%;
+    display: flex;
+    justify-content:end;
+    margin: 10px 0;
+
     .tabItems {
-        background-color: white;
-        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.15); // Hafif şeffaf arkaplan
+        border-radius: 12px;
         display: flex;
         align-items: center;
-        height: 35px;
+        height: 40px;
         position: relative;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); // Hafif gölge efekti eklendi
+        padding: 5px;
+        backdrop-filter: blur(15px); // Blur efekti
+        transition: background 0.3s ease;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.25); // Hover durumunda arkaplan değişikliği
+        }
+
         .tabItem {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100px;
             color: var(--black2);
-            font-size: 14px;
+            font-size: 16px; // Daha belirgin font boyutu
             font-weight: 800;
             position: relative;
             z-index: 1;
             cursor: pointer;
-            transition: color ease 0.1s;
+            transition: all 0.2s ease-in-out; // Geçiş efektlerini düzenledim
+            border-radius: 8px;
+
+            &:hover {
+                color: #333; // Hover durumunda yazı rengi değişimi
+            }
+
             &.active {
-                color: rgb(255, 255, 255);
+                color: #fff;
+                z-index: 2; // Aktif sekmeyi ön plana çıkar
+                transition: color 0.3s ease-in-out; // Daha belirgin geçiş
             }
         }
+
         .movingBg {
-            height: 40px;
+            height: 35px;
             width: 100px;
-            border: 3px solid rgb(160, 160, 160);
-            border-radius: 10px;
-            background-image: linear-gradient(to right, #333333, #575757);
+            border: none; // Kenarlığı kaldırdım
+            border-radius: 8px;
+            background: linear-gradient(to right, #4e4e4e, #6c6c6c); // Geçişli arkaplan rengi
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); // Hafif gölge efekti
             position: absolute;
-            transition: left cubic-bezier(0.01, -0.15, 0.16, 1.005) 0.1s;
+            transition: left cubic-bezier(0.25, 0.8, 0.25, 1) 0.3s; // Smooth animasyon geçişi
+            z-index: 0;
+
+            &:hover {
+                background: linear-gradient(to right, #616161, #8e8e8e); // Hover durumunda renk değişikliği
+                box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); // Hover gölge efekti
+            }
+        }
+    }
+
+    /* Responsive Düzenlemeler */
+    @media screen and (max-width: 768px) {
+        .tabItems {
+            height: 35px;
+            padding: 5px;
+
+            .tabItem {
+                width: 80px;
+                font-size: 14px; // Tabletlerde daha küçük font
+            }
+
+            .movingBg {
+                height: 35px;
+                width: 80px; // Arkaplan boyutunu küçült
+            }
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .tabItems {
+            height: 30px;
+
+            .tabItem {
+                width: 70px;
+                font-size: 12px; // Mobilde daha küçük font boyutu
+            }
+
+            .movingBg {
+                height: 30px;
+                width: 70px; // Arkaplan boyutunu küçült
+            }
         }
     }
 }

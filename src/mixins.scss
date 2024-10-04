@@ -35,3 +35,72 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+@mixin min-sm {
+    @media only screen and (min-width: 640px) {
+        @content;
+    }
+}
+
+@mixin min-md {
+    @media only screen and (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin min-lg {
+    @media only screen and (min-width: 1024px) {
+        @content;
+    }
+}
+
+@mixin min-xl {
+    @media only screen and (min-width: 1280px) {
+        @content;
+    }
+}
+
+@mixin min-xxl {
+    @media only screen and (min-width: 1536px) {
+        @content;
+    }
+}
+
+/* Max-width için mixin'ler */
+@mixin max-sm {
+    @media only screen and (max-width: 640px) {
+        @content;
+    }
+}
+
+@mixin max-md {
+    @media only screen and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin max-lg {
+    @media only screen and (max-width: 1024px) {
+        @content;
+    }
+}
+
+@mixin max-xl {
+    @media only screen and (max-width: 1280px) {
+        @content;
+    }
+}
+
+@mixin max-xxl {
+    @media only screen and (max-width: 1536px) {
+        @content;
+    }
+}
+
+/* Mevcut Ellipsis Mixin'i */
+@mixin ellipsis($line: 2) {
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

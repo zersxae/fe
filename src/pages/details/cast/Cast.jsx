@@ -21,7 +21,7 @@ const Cast = ({ data, loading }) => {
         );
     };
 
-    const firstSixActors = data ? data.slice(0, 6) : [];
+    const firstSixActors = data ? data.slice(0,) : [];
 
     if (!data || data.length === 0) return null;
 
