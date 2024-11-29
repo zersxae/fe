@@ -1,5 +1,6 @@
 @import "../../../mixins.scss";
 @import url('https://fonts.googleapis.com/css2?family=REM:ital,wght@0,400;1,900&display=swap');
+
 .detailsBanner {
     width: 100%;
     background-color: var(--black);
@@ -22,7 +23,6 @@
                 height: 100%;
                 object-fit: cover;
                 object-position: center;
-                
             }
         }
     }
@@ -64,10 +64,8 @@
                 &:hover {
                     transform: scale(1.05);
                     box-shadow: 0 2px 50px rgba(0, 0, 0, 0.3); // Hafif bir gölge efekti
-
                 }
             }
-            
         }
         .right {
             color: white;
@@ -119,66 +117,65 @@
                 .CircularProgressbar-text {
                     fill: rgb(255, 255, 255);
                 }
-                &:hover {
-                    transform: scale(1.2); // Fare üzerine gelindiğinde boyutu büyüt
-                }
             }
             
-            .playbtn {
+            /* Ortak Button Stilleri */
+            .button {
                 display: flex;
                 align-items: center;
-                gap: 20px;
+                gap: 10px;
                 cursor: pointer;
-                transition: transform 0.3s ease;
-                &:hover {
-                    transform: scale(1.1); /* Hover olduğunda büyüklük artışı */
-                }
-                svg {
-                    width: 60px;
-                    @include md {
-                        width: 80px;
-                    }
-                }
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+                font-family: "REM", sans-serif;
+                font-size: 16px;
+                font-weight: 600;
                 
-                .text {
-                    font-size: 30px;
-                    color: #cecece;
-                    transition: all 0.7s ease-in-out;
-                    font-family: "REM", sans-serif;
-                    font-optical-sizing: auto;
-                    font-style: normal;
-                    
+                svg {
+                    width: 24px;
+                    height: 24px;
+                }
 
+                .text {
+                    color: #fff;
                 }
-                .triangle {
-                    stroke-dasharray: 240;
-                    stroke-dashoffset: 480;
-                    stroke: white;
-                    transform: translateY(0);
-                    transition: all 0.7s ease-in-out;
-                }
-                .circle {
-                    stroke: white;
-                    stroke-dasharray: 650;
-                    stroke-dashoffset: 1300;
-                    transition: all 0.5s ease-in-out;
-                }
+
                 &:hover {
-                    .text {
-                        color: #ffffff;
-                    }
-                    .triangle {
-                        stroke-dashoffset: 0;
-                        opacity: 1;
-                        stroke: var(--white);
-                        animation: trailorPlay 0.7s ease-in-out;
-                    }
-                    .circle {
-                        stroke-dashoffset: 0;
-                        stroke: var(--white);
-                    }
+                    transform: translateY(-2px);
                 }
             }
+
+            /* Fragman Butonu */
+            .playbtn {
+                background-color: rgba(255, 255, 255, 0.2);
+                color: #fff;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.3);
+                }
+
+                .text {
+                    color: #fff;
+                }
+            }
+
+            /* İzle Butonu */
+            .izlebtn {
+                background-color: #ff3d00;
+                color: #fff;
+
+                &:hover {
+                    background-color: #2e0101;
+                    
+                }
+
+                .text {
+                    color: #fff;
+                }
+            }
+
             .row {
                 display: flex;
                 align-items: center;
@@ -190,6 +187,8 @@
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 padding: 15px 0;
                 display: flex;
+                flex-direction: column;
+
                 .infoItem {
                     margin-right: 10px;
                     display: flex;
@@ -204,6 +203,11 @@
                         opacity: 1;
                     }
                 }
+            }
+
+            /* Yönetmen, Yazar, Kurucu Bilgileri */
+            .info + .info {
+                margin-top: 10px;
             }
         }
     }
@@ -249,22 +253,25 @@
             }
         }
     }
-}
-.tooltip {
-    display: none;
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    transition: opacity 0.8s;
-    position: absolute; 
-    padding: 10px; /* Daha fazla içerik alanı */
-    border-radius: 7px;
-    z-index: 1;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Hafif bir gölge efekti */
-    backdrop-filter: blur(10px); /* Bulanık arka plan efekti */
-}
 
-.playbtn:hover .tooltip {
-    display: block;
+    .tooltip {
+        display: none;
+        font-size: 12px;
+        color: rgb(255, 255, 255);
+        transition: opacity 0.8s;
+        position: absolute; 
+        padding: 10px; /* Daha fazla içerik alanı */
+        border-radius: 7px;
+        z-index: 1;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Hafif bir gölge efekti */
+        backdrop-filter: blur(10px); /* Bulanık arka plan efekti */
+    }
+    
+    .playbtn:hover .tooltip, .izlebtn:hover .tooltip { // Her iki buton için tooltip
+        display: block;
+    }
+
+    /* Diğer stiller devam ediyor... */
 }
 
 .logoBtn {
