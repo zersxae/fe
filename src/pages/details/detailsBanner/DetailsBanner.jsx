@@ -158,6 +158,9 @@ const DetailsBanner = ({ video, crew }) => {
                                                     İzle
                                                 </span>
                                             </div>
+                                            <div className="description">
+                                            Reklam engelleyici kullanın
+                                            </div>
                                         </div>
 
                                         <div className="overview">
