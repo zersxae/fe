@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Link ekledik
+import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./style.scss";
 import logo from "../../../assets/analogo.png";
@@ -19,8 +19,12 @@ const HeroBanner = () => {
 
     useEffect(() => {
         if (data) {
-            const randomIndex = Math.floor(Math.random() * 10);
-            const selectedMovie = data?.results?.[randomIndex];
+            // Günün indeksini hesapla
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const index = dayOfYear % (data.results?.length || 1); // Gün sayısına göre döngüsel indeks
+            
+            const selectedMovie = data?.results?.[index];       
             const bg = url.backdrop + selectedMovie?.backdrop_path;
             setBackground(bg);
             setImageContent(selectedMovie);
@@ -63,7 +67,7 @@ const HeroBanner = () => {
                     </div>
                     <div>   
                         <span className="imageContent" onClick={handleImageClick}>
-                            Resimdeki içerik: {imageContent?.title}
+                            Günün İçeriği: {imageContent?.title}
                         </span>
                     </div>
                 </div>

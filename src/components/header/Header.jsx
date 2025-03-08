@@ -71,6 +71,22 @@ const Header = () => {
         setShowSearch(false);
     };
 
+    const navigationItems = [
+        {
+            name: "Anasayfa",
+            path: "/"
+        },
+        {
+            name: "Filmler",
+            path: "/explore/movie"
+        },
+        {
+            name: "Diziler",
+            path: "/explore/tv"
+        },
+
+    ];
+
     return (
         <header className={`header2 ${mobileMenu ? "mobileView" : ""} ${show}`}>
             <ContentWrapper>
@@ -78,9 +94,18 @@ const Header = () => {
                     <img src={logo} alt="Site Logo" />
                 </div>
                 <ul className="menuItems">
-                    <li className="menuItem" onClick={() => navigate("/")}>Ana Sayfa</li>
-                    <li className="menuItem" onClick={() => navigate("/explore/movie")}>Filmler</li>
-                    <li className="menuItem" onClick={() => navigate("/explore/tv")}>Diziler</li>
+                    {navigationItems.map((item) => (
+                        <li 
+                            key={item.name} 
+                            className="menuItem"
+                            onClick={() => {
+                                navigate(item.path);
+                                setMobileMenu(false);
+                            }}
+                        >
+                            {item.name}
+                        </li>
+                    ))}
                 </ul>
                 <div className="mobileMenuItems">
                     <HiOutlineSearch onClick={openSearch} className="mobileOnly" />

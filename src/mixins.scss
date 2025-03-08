@@ -28,13 +28,20 @@
     }
 }
 
-@mixin ellipsis($line: 2) {
-    display: -webkit-box;
-    -webkit-line-clamp: $line;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+@mixin ellipsis($line-count) {
+    @if $line-count == 1 {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    } @else {
+        display: -webkit-box;
+        -webkit-line-clamp: $line-count;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
+
 @mixin min-sm {
     @media only screen and (min-width: 640px) {
         @content;
