@@ -11,8 +11,40 @@
     ],
     "routes": [
         {
-            "src": "/(.*)",
+            "src": "/assets/(.*)",
+            "headers": {
+                "cache-control": "public, max-age=31536000, immutable"
+            },
+            "continue": true
+        },
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|gif)$)",
+            "headers": {
+                "cache-control": "public, max-age=31536000, immutable"
+            },
+            "continue": true
+        },
+        {
+            "src": "/.*",
             "dest": "/index.html"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "Content-Type",
+                    "value": "text/javascript"
+                }
+            ]
         }
     ]
 } 
