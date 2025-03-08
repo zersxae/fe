@@ -116,14 +116,13 @@ const Header = () => {
                     )}
                 </div>
             </ContentWrapper>
-
             {showSearch && (
                 <div className="searchBar">
                     <ContentWrapper>
                         <div className="searchInput">
                             <input
                                 type="text"
-                                placeholder="Film veya dizi ara..."
+                                placeholder="Film veya Dizi Ara.."
                                 onChange={(e) => setQuery(e.target.value)}
                                 onKeyUp={searchQueryHandler}
                             />

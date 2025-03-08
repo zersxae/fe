@@ -12,9 +12,18 @@ import PosterFallback from "../../assets/no-poster.png";
 const MovieCard = ({ data, fromSearch, mediaType }) => {
     const { url } = useSelector((state) => state.home);
     const navigate = useNavigate();
-    const posterUrl = data.poster_path
-        ? url.poster + data.poster_path
-        : PosterFallback;
+
+    const getPosterUrl = () => {
+        if (!data?.poster_path) return PosterFallback;
+        if (!url?.poster) {
+            console.warn("Poster URL yapılandırması bulunamadı");
+            return PosterFallback;
+        }
+        return url.poster + data.poster_path;
+    };
+
+    const posterUrl = getPosterUrl();
+
     return (
         <div
             className="movieCard"
@@ -23,18 +32,20 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
             }
         >
             <div className="posterBlock">
-                <Img className="posterImg" src={posterUrl} />
+                <Img className="posterImg" src={posterUrl} alt={data.title || data.name} />
                 {!fromSearch && (
                     <React.Fragment>
-                        <CircleRating rating={data.vote_average.toFixed(1)} />
-                        <Genres data={data.genre_ids.slice(0, 2)} />
+                        <CircleRating rating={data.vote_average?.toFixed(1) || "0"} />
+                        <Genres data={data.genre_ids?.slice(0, 2) || []} />
                     </React.Fragment>
                 )}
             </div>
             <div className="textBlock">
                 <span className="title">{data.title || data.name}</span>
                 <span className="date">
-                    {dayjs(data.release_date).format("MMM D, YYYY")}
+                    {dayjs(data.release_date || data.first_air_date).format(
+                        "MMM D, YYYY"
+                    )}
                 </span>
             </div>
         </div>

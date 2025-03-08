@@ -11,14 +11,22 @@ const IframeSection = ({ data }) => {
     const [showAdBlocker, setShowAdBlocker] = useState(!localStorage.getItem('adBlockerShown'));
     const [showSubtitleInfo, setShowSubtitleInfo] = useState(true);
 
+    const trailer = data?.videos?.results?.find(
+        (vid) => vid.type === "Trailer" && vid.site === "YouTube"
+    );
+
     const videoSources = [
+        ...(trailer?.key ? [{
+            name: "Fragman",
+            getUrl: () => `https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=0&controls=1&origin=https://example.com&hl=tr&modestbranding=1`
+        }] : []),
         {
-            name: "VidSrc",
+            name: "VidSrc", 
             getUrl: () => {
                 if (!data || (!data.imdb_id && !data.id)) return "";
                 const subtitleParams = [
                     "sub_lang=tr",
-                    "lang=tr",
+                    "lang=tr", 
                     "country=TR",
                     "default_subtitle=tr"
                 ].join("&");
@@ -232,6 +240,7 @@ const IframeSection = ({ data }) => {
                             onChange={handleSourceChange}
                             className="sourceDropdown"
                         >
+                            <option value="" disabled>Kaynak Seçin</option>
                             {videoSources.map((source, index) => (
                                 <option key={index} value={index}>
                                     {source.name}

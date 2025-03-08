@@ -1,5 +1,5 @@
 // src/pages/detailsBanner/DetailsBanner.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
@@ -19,16 +19,23 @@ import EmbedPopup from "../../../components/embedPopup/EmbedPopup";
 const DetailsBanner = ({ video, crew }) => {
     const [showVideoPopup, setShowVideoPopup] = useState(false);
     const [videoId, setVideoId] = useState(null);
-
     const [showEmbedPopup, setShowEmbedPopup] = useState(false);
     const [embedUrl, setEmbedUrl] = useState(null);
 
     const { mediaType, id } = useParams();
-    const { data, loading, error } = useFetch(`/${mediaType}/${id}?append_to_response=external_ids`);
-
+    const { data, loading } = useFetch(`/${mediaType}/${id}?append_to_response=videos,external_ids`);
     const { url } = useSelector((state) => state.home);
 
     const _genres = data?.genres?.map((g) => g.name);
+    const trailer = data?.videos?.results?.find(
+        (vid) => vid.type === "Trailer" && vid.site === "YouTube"
+    );
+
+    useEffect(() => {
+        if (trailer?.key) {
+            setVideoId(trailer.key);
+        }
+    }, [trailer]);
 
     const director = crew?.filter((f) => f.job === "Director");
     const writer = crew?.filter(
@@ -85,8 +92,6 @@ const DetailsBanner = ({ video, crew }) => {
         return langTranslations[langName] || langName;
     };
 
- 
-
     const getPlatforms = () => {
         return data?.platforms || [];
     };
@@ -134,40 +139,12 @@ const DetailsBanner = ({ video, crew }) => {
                                             <Genres data={_genres} />
                                         </div>
 
-                                        <div className="row">
-                                            <CircleRating
-                                                rating={data.vote_average.toFixed(1)}
-                                            />
-                                            
-                                            <div className="buttons">
-                                                {video && (
-                                                    <div
-                                                        className="playbtn"
-                                                        onClick={() => {
-                                                            setShowVideoPopup(true);
-                                                            setVideoId(video.key);
-                                                        }}
-                                                    >
-                                                        <svg
-                                                            className="playIcon"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 24 24"
-                                                            fill="currentColor"
-                                                        >
-                                                            <path d="M8 5v14l11-7z" />
-                                                        </svg>
-                                                        <span className="text">Fragmanı İzle</span>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-
                                         {/* Film Açıklaması */}
                                         <div className="overview">
                                             <div className="heading">Özet</div>
                                             {data.overview && (
                                                 <div className="description">
-                                                    "{data.overview} Sine Rüya İyi Seyirler Diler. "
+                                                    {data.overview}
                                                 </div>
                                             )}
                                         </div>
@@ -178,6 +155,13 @@ const DetailsBanner = ({ video, crew }) => {
                                                 {data.adult ? '18+' : 
                                                  data.vote_average >= 7 ? 'Genel İzleyici' : 
                                                  '13+'}
+                                            </span>
+                                            <span className="imdb-rating">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                    <path fill="#F5C518" d="M11.107 8.417h-1.17v7.165h1.17V8.417zm4.667 0h-1.213l-.922 3.937-.898-3.937h-1.236l1.278 4.78-.19.723c-.071.27-.223.401-.446.401a1.28 1.28 0 01-.49-.096v.912a2.19 2.19 0 00.648.113c.697 0 1.094-.412 1.19-1.237l1.279-5.596zm4.67 1.036V8.417h-3.686v7.165h3.686v-1.036h-2.515v-2.177h2.283v-1.025h-2.283V9.453h2.515zm-11.97 5.093V9.453h.855c.697 0 1.112.39 1.112 1.248v2.55c0 .847-.415 1.26-1.112 1.26l-.856-.001zm-.153-6.13h-2.01v7.166h1.859c1.713 0 2.485-.802 2.485-2.374v-2.374c0-1.605-.772-2.418-2.334-2.418z"/>
+                                                    <path fill="#F5C518" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 1.5c4.687 0 8.5 3.813 8.5 8.5 0 4.687-3.813 8.5-8.5 8.5-4.687 0-8.5-3.813-8.5-8.5 0-4.687 3.813-8.5 8.5-8.5z"/>
+                                                </svg>
+                                                <span>{data.vote_average.toFixed(1)}</span>
                                             </span>
                                             {data.status && (
                                                 <span className="status">
