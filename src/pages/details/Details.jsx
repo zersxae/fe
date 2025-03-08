@@ -61,9 +61,9 @@ const Details = () => {
                 <>
                     <DetailsBanner video={data?.videos?.results?.[0]} crew={data?.credits?.crew} />
                     <Cast data={data?.credits?.cast} loading={loading} />
-                    <ImageGallery images={images} loading={loading} />
                     <VideosSection data={data?.videos} loading={loading} />
                     <IframeSection video={data?.videos?.results?.[0]} data={data} />
+                    <ImageGallery images={images} loading={loading} />
                     <Networks networks={networks} />
                     <Similar mediaType={mediaType} id={id} />
                     <Recommendation mediaType={mediaType} id={id} />
