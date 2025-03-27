@@ -66,3 +66,43 @@
         }
     }
 }
+
+.details {
+    position: relative;
+    background-color: var(--black);
+    min-height: 100vh;
+
+    .detailsContent {
+        position: relative;
+        padding: 0;
+        gap: 50px;
+        display: flex;
+        flex-direction: column;
+
+        .detailsSection {
+            position: relative;
+            margin-bottom: 50px;
+            
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: -50px;
+                height: 100px;
+                background: linear-gradient(180deg, 
+                    rgba(17,17,17,0) 0%,
+                    rgba(17,17,17,0.7) 35%,
+                    rgba(17,17,17,0.9) 65%,
+                    rgba(17,17,17,1) 100%
+                );
+                pointer-events: none;
+                z-index: -1;
+            }
+        }
+    }
+}

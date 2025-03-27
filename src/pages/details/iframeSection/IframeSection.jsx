@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import "./style.scss";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 
-const IframeSection = ({ data }) => {
+const IframeSection = ({ data, video }) => {
     const { mediaType, id } = useParams();
     const [currentSource, setCurrentSource] = useState(0);
     const [error, setError] = useState(false);
@@ -11,7 +11,7 @@ const IframeSection = ({ data }) => {
     const [showAdBlocker, setShowAdBlocker] = useState(!localStorage.getItem('adBlockerShown'));
     const [showSubtitleInfo, setShowSubtitleInfo] = useState(true);
 
-    const trailer = data?.videos?.results?.find(
+    const trailer = video?.site === "YouTube" ? video : data?.videos?.results?.find(
         (vid) => vid.type === "Trailer" && vid.site === "YouTube"
     );
 

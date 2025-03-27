@@ -62,7 +62,7 @@ const Details = () => {
                     <DetailsBanner video={data?.videos?.results?.[0]} crew={data?.credits?.crew} />
                     <Cast data={data?.credits?.cast} loading={loading} />
                     <VideosSection data={data?.videos} loading={loading} />
-                    <IframeSection video={data?.videos?.results?.[0]} data={data} />
+                    <IframeSection video={data?.videos?.results?.find(vid => vid.type === "Trailer" && vid.site === "YouTube")} data={data} />
                     <ImageGallery images={images} loading={loading} />
                     <Networks networks={networks} />
                     <Similar mediaType={mediaType} id={id} />

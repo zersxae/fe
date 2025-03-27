@@ -1,15 +1,15 @@
 import React, { useState, useRef } from "react";
-import { useSelector } from "react-redux";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 import Img from "../../../components/lazyLoadImage/Img";
+import CarouselArrow from "../../../components/carousel/CarouselArrow";
+import { IoClose } from "react-icons/io5";
 import "./style.scss";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 
 const ImageGallery = ({ images, loading }) => {
     const [showModal, setShowModal] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const carouselContainer = useRef();
+    const modalImageRef = useRef();
 
     if (!loading && (!images || images.length === 0)) {
         return null;
@@ -18,10 +18,12 @@ const ImageGallery = ({ images, loading }) => {
     const handleImageClick = (index) => {
         setCurrentImageIndex(index);
         setShowModal(true);
+        document.body.style.overflow = 'hidden';
     };
 
     const handleClose = () => {
         setShowModal(false);
+        document.body.style.overflow = 'auto';
     };
 
     const handlePrev = (e) => {
@@ -40,7 +42,6 @@ const ImageGallery = ({ images, loading }) => {
 
     const navigation = (dir) => {
         const container = carouselContainer.current;
-
         const scrollAmount = dir === "left" 
             ? container.scrollLeft - (container.offsetWidth + 20)
             : container.scrollLeft + (container.offsetWidth + 20);
@@ -60,16 +61,18 @@ const ImageGallery = ({ images, loading }) => {
     return (
         <div className="gallerySection">
             <ContentWrapper>
-                <div className="sectionHeading">Resim Galerisi</div>
+                <div className="sectionHeading">Galeri</div>
                 {!loading ? (
                     <div className="galleryWrapper">
-                        <MdOutlineNavigateBefore
-                            className="carouselLeftNav arrow"
-                            onClick={() => navigation("left")}
+                        <CarouselArrow 
+                            direction="left" 
+                            onClick={() => navigation("left")} 
+                            className="galleryArrow"
                         />
-                        <MdOutlineNavigateNext
-                            className="carouselRightNav arrow"
-                            onClick={() => navigation("right")}
+                        <CarouselArrow 
+                            direction="right" 
+                            onClick={() => navigation("right")} 
+                            className="galleryArrow"
                         />
                         <div className="gallery" ref={carouselContainer}>
                             {images?.map((image, index) => (
@@ -79,6 +82,9 @@ const ImageGallery = ({ images, loading }) => {
                                     onClick={() => handleImageClick(index)}
                                 >
                                     <Img src={image} />
+                                    <div className="imageOverlay">
+                                        <span>{index + 1}/{images.length}</span>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -103,17 +109,56 @@ const ImageGallery = ({ images, loading }) => {
                 >
                     <div className="modalContent" onClick={(e) => e.stopPropagation()}>
                         <button className="closeButton" onClick={handleClose}>
-                            <IoCloseCircleOutline />
+                            <IoClose />
                         </button>
-                        <button className="navButton prev" onClick={handlePrev}>
-                            <MdOutlineNavigateBefore />
-                        </button>
-                        <div className="modalImage">
-                            <Img src={images[currentImageIndex]} />
+                        <div className="modalSlider">
+                            <div className="modalImage" ref={modalImageRef}>
+                                <Img src={images[currentImageIndex]} />
+                            </div>
+                            <div className="thumbnailsContainer">
+                                {images.map((image, index) => (
+                                    <div 
+                                        key={index}
+                                        className={`thumbnail ${index === currentImageIndex ? 'active' : ''}`}
+                                        onClick={() => setCurrentImageIndex(index)}
+                                    >
+                                        <Img src={image} />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <button className="navButton next" onClick={handleNext}>
-                            <MdOutlineNavigateNext />
-                        </button>
+                        <CarouselArrow 
+                            direction="left"
+                            onClick={handlePrev}
+                            className="modalArrow"
+                            style={{
+                                position: "absolute",
+                                top: "50%",
+                                left: "30px",
+                                transform: "translateY(-50%)",
+                                width: "60px", 
+                                height: "60px",
+                                background: "rgba(255, 255, 255, 0.2)",
+                                border: "3px solid rgba(255, 255, 255, 0.56)",
+                                backdropFilter: "blur(20px)"
+                            }}
+                        />
+                        <CarouselArrow
+                            direction="right"
+                            onClick={handleNext}
+                            className="modalArrow"
+                            style={{
+                                position: "absolute", 
+                                top: "50%",
+                                right: "30px",
+                                transform: "translateY(-50%)",
+                                width: "60px",
+                                height: "60px", 
+                                background: "rgba(255, 255, 255, 0.2)",
+                                border: "3px solid rgba(255, 255, 255, 0.56)",
+                                backdropFilter: "blur(20px)"
+                            }}
+                        />
                         <div className="imageCounter">
                             {currentImageIndex + 1} / {images.length}
                         </div>
